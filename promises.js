@@ -50,43 +50,43 @@ function pedirLibro(idDelLibro) {
 // })
 
 
-//* ENCADENAR PROMESAS (cuando la promesa anterior tiene info necesesaria para la promesa nueva)
-// pedirLibro(88)
-//   .then((elLibro) => {
-//     console.log(`leyendo el libro: ${elLibro.title}`);
+//* PEDIR LA INFO UNA A UNA (ENCADENAR PROMESAS) (cuando la promesa anterior tiene info necesesaria para la promesa nueva)
+pedirLibro(88)
+  .then((elLibro) => {
+    console.log(`leyendo el libro: ${elLibro.title}`);
 
-//     // pedir una nueva promesa (hacer otra llamada a una API)
-//     return pedirLibro(2);
-//   })
-//   .then((elLibro) => {
-//     console.log(`leyendo el libro: ${elLibro.title}`);
+    // pedir una nueva promesa (hacer otra llamada a una API)
+    return pedirLibro(2);
+  })
+  .then((elLibro) => {
+    console.log(`leyendo el libro: ${elLibro.title}`);
 
-//     return pedirLibro(3);
-//   })
-//   .then((elLibro) => {
-//     console.log(`leyendo el libro: ${elLibro.title}`);
-//   })
-//   .catch((error) => {
-//     console.log(error);
-//   });
+    return pedirLibro(3);
+  })
+  .then((elLibro) => {
+    console.log(`leyendo el libro: ${elLibro.title}`);
+  })
+  .catch((error) => {
+    console.log(error);
+  });
 
 
-//* RELVERLAS TODAS A LA VEZ => Promise.all y Promise.allSettled
+//* PEDIRLAS LA INFO TODAS A LA VEZ => Promise.all y Promise.allSettled
 
 // promise.all recibe una array de muchas promesas
-// Promise.all([
-//   pedirLibro(1),
-//   pedirLibro(99),
-//   pedirLibro(3)
-// ])
-// .then((algo) => {
-//   // esto se ejecuta cuando todas las promesas hayan resuelto correctamente (fullfilled)
-//   console.log(algo)
-// })
-// .catch((error) => {
-//   // si una de las promesas falla, todo falla y me da el error en este .catch
-//   console.log(error)
-// })
+Promise.all([
+  pedirLibro(1),
+  pedirLibro(99),
+  pedirLibro(3)
+])
+.then((response) => {
+  // esto se ejecuta cuando todas las promesas hayan resuelto correctamente (fullfilled)
+  console.log(response)
+})
+.catch((error) => {
+  // si una de las promesas falla, todo falla y me da el error en este .catch
+  console.log(error)
+})
 
 // promise.allSettled recibe una array de muchas promesas
 Promise.allSettled([
@@ -94,11 +94,7 @@ Promise.allSettled([
   pedirLibro(99),
   pedirLibro(3)
 ])
-.then((algo) => {
+.then((response) => {
   // esto se ejecuta siempre
-  console.log(algo)
-})
-.catch((error) => {
-  // si una de las promesas falla, todo falla y me da el error en este .catch
-  console.log(error)
+  console.log(response) // info de cada promesa, si fue resuelta o no y si valor o razón de rechazo.
 })
