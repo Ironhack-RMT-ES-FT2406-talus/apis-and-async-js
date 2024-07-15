@@ -37,17 +37,19 @@ function pedirLibro(idDelLibro) {
   });
 }
 
-// const laPromesa = pedirLibro(88)
-// console.log(laPromesa)
+//* SINTAXIS THEN/CATCH
 
-// // Como nosotros resolvemos promesas?
-// laPromesa
-// .then((elLibro) => {
-//   console.log(`leyendo el libro: ${elLibro.title}`)
-// })
-// .catch((error) => {
-//   console.log(error)
-// })
+const laPromesa = pedirLibro(88)
+console.log(laPromesa)
+
+// Como nosotros resolvemos promesas?
+laPromesa
+.then((elLibro) => {
+  console.log(`leyendo el libro: ${elLibro.title}`)
+})
+.catch((error) => {
+  console.log(error)
+})
 
 
 //* PEDIR LA INFO UNA A UNA (ENCADENAR PROMESAS) (cuando la promesa anterior tiene info necesesaria para la promesa nueva)
@@ -80,11 +82,11 @@ Promise.all([
   pedirLibro(3)
 ])
 .then((response) => {
-  // esto se ejecuta cuando todas las promesas hayan resuelto correctamente (fullfilled)
+  // esto se ejecuta cuando TODAS las promesas hayan resuelto correctamente (fullfilled)
   console.log(response)
 })
 .catch((error) => {
-  // si una de las promesas falla, todo falla y me da el error en este .catch
+  // SI AL MENOS UNA de las promesas falla, todo falla y me da el error en este .catch
   console.log(error)
 })
 
@@ -98,3 +100,34 @@ Promise.allSettled([
   // esto se ejecuta siempre
   console.log(response) // info de cada promesa, si fue resuelta o no y si valor o razón de rechazo.
 })
+
+//* SINTAXIS ASYNC AWAIT => resolver promesas una a una o todas a la vez
+// NOTA: Siempre agregar el bloque try/catch para gestionar errores
+
+// obligatoriamente debemos trabajar dentro de una funcion
+
+async function getData() {
+  // el async nos permite resolver promesas de una forma simple.
+
+  try {
+    // intenta hacer este código
+
+    const libro1 = await pedirLibro(1)
+    // await hace dos cosas:
+    // 1. resuelve la promesa y me da el valor despues de resuelta
+    // 2. espera que esa linea termine antes de continuar con el código
+    console.log(`leyendo el libro: ${libro1.title}`);
+    const libro2 = await pedirLibro(88)
+    console.log(`leyendo el libro: ${libro2.title}`);
+    const libro3 = await pedirLibro(3)
+    console.log(`leyendo el libro: ${libro3.title}`);
+
+  } catch(error) {
+    // ocurre si algo del try falla
+    console.log(error)
+  }
+
+}
+
+//! RECORDAR INVOCAR LA FUNCION
+getData()
