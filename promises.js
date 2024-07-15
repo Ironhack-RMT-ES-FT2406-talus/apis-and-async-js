@@ -51,7 +51,7 @@ function pedirLibro(idDelLibro) {
 
 
 //* PEDIR LA INFO UNA A UNA (ENCADENAR PROMESAS) (cuando la promesa anterior tiene info necesesaria para la promesa nueva)
-pedirLibro(88)
+pedirLibro(1)
   .then((elLibro) => {
     console.log(`leyendo el libro: ${elLibro.title}`);
 
